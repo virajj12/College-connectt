@@ -29,15 +29,6 @@ Experience the application live here:
 * **Management:** View all created notifications and a dedicated button to **Delete** outdated entries.
 * **Analytics:** A simple dashboard providing an overview of total notifications, total events, and total exams created.
 
-## 🔑 Demo Credentials
-
-To explore the application's full functionality, use the following predefined users:
-
-| Role | Email | Password | Details |
-| :--- | :--- | :--- | :--- |
-| **Student** | `student@college.edu` | `password` | Registered as 3rd Year, CSE Branch |
-| **Admin** | `admin@college.edu` | `password` | Full administrative privileges |
-
 ## 🛠️ Tech Stack
 
 * **Frontend:** HTML5, CSS3, Vanilla JavaScript
