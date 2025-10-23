@@ -12,7 +12,7 @@ const app = express();
 // Middleware
 app.use(express.json({ limit: '50mb' }));
 app.use(cors({
-    origin: 'http://127.0.0.1:5000'
+    origin: 'https://virajj12.github.io/College-Connect/'
 }));
 
 // Serve static files from 'public'
