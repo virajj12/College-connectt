@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.png">
+    <title>College Connect - Unified Notification System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-background"></div>
+    <div class="logo-container">
+        <img src="assets/Alva's_Institution_Logo.png" alt="Alva's_Institution_Logo" />
+    </div>
+
+    <div id="authSection" class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>College Connect</h1>
+                <p>Unified Notification System</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+                </div>
+                <div class="forgot-password">
+                    <a id="forgotPasswordLink" onclick="showForgotPassword()">Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign In</button>
+            </form>
+
+            <form id="registerForm" class="hidden">
+                <div class="form-group">
+                    <label for="registerName">Full Name</label>
+                    <input type="text" id="registerName" class="form-control" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" class="form-control" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword" class="form-control" placeholder="Create a password" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerBranch">Branch</label>
+                    <select id="registerBranch" class="form-control" required>
+                        <option value="">Select Branch</option>
+                        <option value="CSE">Computer Science</option>
+                        <option value="ECE">Electronics & Communication</option>
+                        <option value="ME">Mechanical Engineering</option>
+                        <option value="CE">Civil Engineering</option>
+                        <option value="EE">Electrical Engineering</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="registerYear">Year</label>
+                    <select id="registerYear" class="form-control" required>
+                        <option value="">Select Year</option>
+                        <option value="1">First Year</option>
+                        <option value="2">Second Year</option>
+                        <option value="3">Third Year</option>
+                        <option value="4">Fourth Year</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="registerRole">Role</label>
+                    <select id="registerRole" class="form-control" required>
+                        <option value="student">Student</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Account</button>
+            </form>
+
+            <div class="switch-form">
+                <span id="switchText">Don't have an account? </span>
+                <a id="switchLink" onclick="toggleAuthForm()">Sign up</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="forgotPasswordModal">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h3>Reset Password</h3>
+        <form id="forgotPasswordForm">
+            <div class="form-group">
+                <label for="resetEmail">Enter your email</label>
+                <input type="email" id="resetEmail" class="form-control" placeholder="Your registered email" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Send Reset Link</button>
+        </form>
+    </div>
+
+    <div id="studentDashboard" class="dashboard">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-content">
+                    <div class="logo">College Connect</div>
+                    <div class="nav-links">
+                        <a href="#" onclick="showSection('notifications')">Notifications</a>
+                        <a href="#" onclick="showSection('events')">Events</a>
+                        <a href="#" onclick="showSection('exams')">Exams</a>
+                        <a href="#" onclick="logout()">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container main-content">
+            <div class="dashboard-header">
+                <h1>Student Dashboard</h1>
+                <p>Stay updated with college announcements and events</p>
+            </div>
+
+            <div id="notificationsSection">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Latest Notifications</h2>
+                        <div class="sort-container">
+                            <label for="sortSelect">Sort by:</label>
+                            <select id="sortSelect" class="sort-select">
+                                <option value="date-desc">Latest First</option>
+                                <option value="date-asc">Oldest First</option>
+                                <option value="title">Title</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filter-bar">
+                        <button class="filter-btn active" onclick="filterNotifications('all', this)" data-audience="all">All</button>
+                        <button class="filter-btn" onclick="filterNotifications('CSE', this)" data-audience="CSE">CSE</button>
+                        <button class="filter-btn" onclick="filterNotifications('ECE', this)" data-audience="ECE">ECE</button>
+                        <button class="filter-btn" onclick="filterNotifications('ME', this)" data-audience="ME">ME</button>
+                        <button class="filter-btn" onclick="filterNotifications('college', this)" data-audience="College-wide">College-wide</button>
+                    </div>
+                    <ul class="notification-list" id="notificationList">
+                    </ul>
+                </div>
+            </div>
+
+            <div id="eventsSection" class="hidden">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Upcoming Events</h2>
+                    </div>
+                    <ul class="notification-list" id="eventsList">
+                    </ul>
+                </div>
+            </div>
+
+            <div id="examsSection" class="hidden">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Exam Schedule</h2>
+                    </div>
+                    <ul class="notification-list" id="examsList">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="adminDashboard" class="dashboard">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-content">
+                    <div class="logo">College Connect - Admin</div>
+                    <div class="nav-links">
+                        <a href="#" onclick="showAdminSection('create')">Create Notification</a>
+                        <a href="#" onclick="showAdminSection('manage')">Manage</a>
+                        <a href="#" onclick="showAdminSection('analytics')">Analytics</a>
+                        <a href="#" onclick="logout()">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container main-content">
+            <div class="dashboard-header">
+                <h1>Admin Dashboard</h1>
+                <p>Manage college notifications and announcements</p>
+            </div>
+
+            <div id="createSection">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Create New Notification</h2>
+                    </div>
+                    <form id="notificationForm">
+                        <div class="form-group">
+                            <label for="notificationTitle">Title</label>
+                            <input type="text" id="notificationTitle" class="form-control" placeholder="Enter notification title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="notificationImage">Image Upload (Optional)</label>
+                            <div id="dropArea">
+                                <p>Drag & Drop an image here or click to select file</p>
+                            </div>
+                            <input type="file" id="notificationImage" class="hidden" accept="image/*">
+                            <img id="imagePreview" src="#" alt="Image Preview" style="display: none;">
+                        </div>
+                        <div class="form-group">
+                            <label for="notificationContent">Content</label>
+                            <textarea id="notificationContent" class="form-control" rows="4" placeholder="Enter notification content" required></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="notificationType">Type</label>
+                                <select id="notificationType" class="form-control" required>
+                                    <option value="general">General</option>
+                                    <option value="event">Event</option>
+                                    <option value="exam">Exam</option>
+                                    <option value="circular">Circular</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="notificationAudience">Audience</label>
+                                <select id="notificationAudience" class="form-control" required>
+                                    <option value="college">College-wide</option>
+                                    <option value="CSE">Computer Science</option>
+                                    <option value="ECE">Electronics & Communication</option>
+                                    <option value="ME">Mechanical Engineering</option>
+                                    <option value="CE">Civil Engineering</option>
+                                    <option value="EE">Electrical Engineering</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Publish Notification</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="manageSection" class="hidden">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Manage Notifications</h2>
+                    </div>
+                    <ul class="notification-list" id="adminNotificationList">
+                    </ul>
+                </div>
+            </div>
+
+            <div id="analyticsSection" class="hidden">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Analytics Dashboard</h2>
+                    </div>
+                    <div id="analyticsContent" class="mb-20">
+                        <p>Total Notifications: <strong id="totalNotifications">0</strong></p>
+                        <p>Total Events: <strong id="totalEvents">0</strong></p>
+                        <p>Total Exams: <strong id="totalExams">0</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="notificationModal">
+        <span class="close-btn" onclick="closeNotificationModal()">&times;</span>
+        <h2 id="modalTitle"></h2>
+        <img id="modalImage" style="display:none;" />
+        <p id="modalContent"></p>
+        <small id="modalMeta"></small>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
